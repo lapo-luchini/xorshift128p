@@ -13,6 +13,7 @@
  * See <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
+/*jshint browser: true, strict: true, immed: true, latedef: true, undef: false */
 (function () {
 "use strict";
 
@@ -30,7 +31,7 @@ function XorShift128p(seed) {
     this.seed = function (seed) {
         s[0] = seed / 4294967296;
         s[1] = seed;
-    }
+    };
     if (seed)
         this.seed(seed);
     this.next = function () {
