@@ -1,8 +1,8 @@
-/*! xorshift128p JavaScript port
+/*! xorshift128+ JavaScript port
  * written in 2016 by Lapo Luchini <lapo@lapo.it>
  *
  * based on the C sources as found on 2016-01-22 on
- * http://xorshift.di.unimi.it/xorshift128plus.c
+ * <http://xorshift.di.unimi.it/xorshift128plus.c>
  *
  * Written in 2014-2015 by Sebastiano Vigna (vigna@acm.org)
  *
