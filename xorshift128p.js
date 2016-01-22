@@ -13,6 +13,9 @@
  * See <http://creativecommons.org/publicdomain/zero/1.0/>.
  */
 
+(function () {
+"use strict";
+
 var j = new Uint32Array(4); // jump constant
 j[0] = 0x635d2dff;
 j[1] = 0x8a5cd789;
@@ -89,4 +92,6 @@ function XorShift128p(seed) {
     };
 }
 
-module.exports = XorShift128p;
+// export globals
+if (typeof module !== 'undefined') { module.exports = XorShift128p; } else { window.XorShift128p = XorShift128p; }
+})();
