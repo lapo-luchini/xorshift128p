@@ -26,7 +26,8 @@ j[3] = 0x121fd215;
 function XorShift128p(seed) {
     var s = new Uint32Array(4), // seed
         t = new Uint32Array(4), // temp
-        o = new Uint32Array(2); // out
+        o = new Uint32Array(2), // out
+        ov = new DataView(o.buffer); // endian-agnostic view of the buffer
     // The state must be seeded so that it is not everywhere zero.
     this.seed = function (seed) {
         s[0] = seed / 4294967296;
@@ -90,6 +91,17 @@ function XorShift128p(seed) {
         s[1] = l[1];
         s[2] = l[2];
         s[3] = l[3];
+    };
+    this.nextFloat = function () {
+        // generate 64 random bit
+        this.next();
+        // fix the exponent to get a value in [1.0,2.0)
+        var v = ov.getUint32(0);
+        v &= 0x000FFFFF;
+        v |= 0x3FF00000;
+        ov.setUint32(0, v);
+        // subtract one to have [0.0,1.0)
+        return ov.getFloat64(0) - 1;
     };
 }
 
