@@ -9,13 +9,17 @@ var r = new XorShift128p(1);
 r.jump();
 for (var i = 0; i < 10; ++i)
     process.stdout.write(r.nextFloat() + '\n');
-var d = new Uint32Array(1000);
-for (i = 0; i < 1000000; ++i)
+var d = new Uint32Array(1000),
+    tot = 10000000;
+for (i = 0; i < tot; ++i)
     ++d[0|(r.nextFloat() * 1000)];
-var min = 1E99, max = 0;
+var min = 1E99, max = 0, num = 0;
 for (i = 0; i < 1000; ++i) {
+    num += d[i];
     if (d[i] < min) min = d[i];
     if (d[i] > max) max = d[i];
 }
 process.stdout.write('Min bucket: ' + min + '\n');
 process.stdout.write('Max bucket: ' + max + '\n');
+if (num < tot)
+    process.stdout.write('Out bucket: ' + (tot - num) + '\n');

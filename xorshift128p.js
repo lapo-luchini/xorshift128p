@@ -92,16 +92,12 @@ function XorShift128p(seed) {
         s[2] = l[2];
         s[3] = l[3];
     };
-    this.nextFloat = function () {
-        // generate 64 random bit
+    this.next53 = function () {
         this.next();
-        // fix the exponent to get a value in [1.0,2.0)
-        var v = ov.getUint32(0);
-        v &= 0x000FFFFF;
-        v |= 0x3FF00000;
-        ov.setUint32(0, v);
-        // subtract one to have [0.0,1.0)
-        return ov.getFloat64(0) - 1;
+        return (o[0] & 0x001FFFFF) * 0x100000000 + o[1];
+    };
+    this.nextFloat = function () {
+        return this.next53() / 0x20000000000000;
     };
 }
 
